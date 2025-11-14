@@ -1,0 +1,25 @@
+# Sudoers configuration for SSH Notify Discord Bot
+# This allows the discord_bot.py script to run iptables commands without password
+# Install this file to /etc/sudoers.d/ssh-notify
+
+# Allow the user running the bot to execute iptables commands
+# Replace 'botuser' with the actual username running the bot
+# Or use a group if preferred
+
+# For a specific user (recommended):
+# botuser ALL=(ALL) NOPASSWD: /usr/sbin/iptables -A INPUT -s * -j DROP
+# botuser ALL=(ALL) NOPASSWD: /usr/sbin/iptables -D INPUT -s * -j DROP
+# botuser ALL=(ALL) NOPASSWD: /usr/sbin/iptables -C INPUT -s * -j DROP
+# botuser ALL=(ALL) NOPASSWD: /usr/sbin/iptables -L INPUT -n -v
+# botuser ALL=(ALL) NOPASSWD: /usr/sbin/iptables-save
+# botuser ALL=(ALL) NOPASSWD: /usr/bin/tail -n * /var/log/auth.log
+# botuser ALL=(ALL) NOPASSWD: /usr/bin/tail -n * /var/log/secure
+
+# For root (if running as root - less secure but simpler for testing):
+root ALL=(ALL) NOPASSWD: /usr/sbin/iptables
+root ALL=(ALL) NOPASSWD: /usr/sbin/iptables-save
+root ALL=(ALL) NOPASSWD: /usr/bin/tail -n * /var/log/auth.log
+root ALL=(ALL) NOPASSWD: /usr/bin/tail -n * /var/log/secure
+
+# Security note: In production, you should run the bot as a dedicated user
+# with limited permissions and only allow specific iptables operations
